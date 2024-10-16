@@ -1,56 +1,55 @@
 import pygame
 import time
 import random
+import screens
+import functions
+import classes
 
-WIDTH, HEIGHT = 800, 725
-WIN = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Clue-Less")
-scarletImg = pygame.image.load('miss scarlet.JPG')
-colonelImg = pygame.image.load('colonel mustard.JPG')
-greenImg = pygame.image.load('mr green.JPG')
-peacockImg = pygame.image.load('mrs peacock.JPG')
-whiteImg = pygame.image.load('mrs white.JPG')
-plumImg = pygame.image.load('prof plum.JPG')
+pygame.init()
 
-BG = pygame.transform.scale(pygame.image.load("gameboard.JPG"), (WIDTH, HEIGHT))
+global WIDTH, HEIGHT
+global WIN
+global start_button
 
-
-
-def draw():
-    WIN.blit(BG, (0,0))
-    WIN.blit(scarletImg,(WIDTH *.1,HEIGHT *.1))
-    WIN.blit(colonelImg,(WIDTH *.4,HEIGHT *.1))
-    WIN.blit(greenImg,(WIDTH *.7,HEIGHT *.1))
-    WIN.blit(peacockImg,(WIDTH *.1,HEIGHT *.6))
-    WIN.blit(whiteImg,(WIDTH *.4,HEIGHT *.6))
-    WIN.blit(plumImg,(WIDTH *.7,HEIGHT *.6))
-    pygame.display.update()
 
 def main():
     run = True
-
+    game_state = "home_screen"
     while run:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
                 break
-        draw()
 
+        if game_state == "home_screen":
+            screens.draw_home_screen()
+            keyhit = pygame
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_BACKSPACE]:
+                player_x = 200
+                player_y = 400
+                game_state = "lobby"
+                game_over = False
+        elif game_state == "lobby":
+            screens.draw_lobby()
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_SPACE]:
+                player_x = 200
+                player_y = 400
+                game_state = "game_screen"
+                game_over = False
+        elif game_state == "game_screen":
+            screens.draw_game_screen()
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_BACKSPACE]:
+                player_x = 200
+                player_y = 400
+                game_state = "end_screen"
+                game_over = False
+        elif game_state == "end_screen":
+            screens.draw_end_screen()
     pygame.quit()
 
 if __name__ == "__main__":
     main()
-
-
-
-class Player:
-    name = ""
-    character = ""
-
-weapons = ["Candlestick", "Wrench", "Lead Pipe", "Rope", "Dagger", "Revolver"]
-rooms = ["Study", "Hall", "Lounge", "Library", "Billiard Room", "Dining Room", "Conservatory", "Ballroom", "Kitchen"]
-characters = ["Miss Scarlet", "Colonel Mustard", "Professor Plum", "Mrs. Peacock", "Mr. Green", "Mrs. White"]
-
-def joinGame():
-    print("Welcome to Clue-Less! Please choose your character")
 
