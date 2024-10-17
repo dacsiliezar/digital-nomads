@@ -26,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
@@ -36,7 +36,7 @@
               "RelativeDocumentMoniker": "classes.py",
               "ToolTip": "C:\\Users\\10mar\\source\\repos\\dacsiliezar\\digital-nomads\\classes.py",
               "RelativeToolTip": "classes.py",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACUAAABHAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2024-10-16T21:41:43.756Z",
               "EditorCaption": ""
@@ -62,11 +62,17 @@
               "RelativeDocumentMoniker": "screens.py",
               "ToolTip": "C:\\Users\\10mar\\source\\repos\\dacsiliezar\\digital-nomads\\screens.py",
               "RelativeToolTip": "screens.py",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2024-10-16T00:02:06.635Z",
               "EditorCaption": ""
-            },
+            }
+          ]
+        },
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -75,7 +81,7 @@
               "RelativeDocumentMoniker": "clue-less.py",
               "ToolTip": "C:\\Users\\10mar\\source\\repos\\dacsiliezar\\digital-nomads\\clue-less.py",
               "RelativeToolTip": "clue-less.py",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAADIAAABJAAAAAAAAAA==",
+              "ViewState": "AgIAACYAAAAAAAAAAIAwwDwAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2024-10-15T21:19:41.916Z",
               "EditorCaption": ""
