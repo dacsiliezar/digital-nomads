@@ -26,39 +26,53 @@ def main():
     title = 'Please select your character'
     font = pygame.font.SysFont('comicsansms',40)
     name_box = pygame.Rect(250,725/2,300,50)
+    game_players = []
+    curr_char = ""
     while run:
         for event in pygame.event.get():
             pygame.display.flip()
             if event.type == pygame.QUIT:
                 run = False
                 break
-
+            MENU_MOUSE_POS = pygame.mouse.get_pos()
 
             if game_state == "home_screen":
-                screens.draw_home_screen()
-                keys = pygame.key.get_pressed()
-                if keys[pygame.K_BACKSPACE]:
-                    player_x = 200
-                    player_y = 400
-                    game_state = "lobby"
-                    game_over = False
-
+                WIN = screens.draw_home_screen()
+                lobby_button = classes.ImageButton(image=pygame.image.load("images/join lobby button.png"), pos=(800*.5, 725*.75), name="Join Lobby")
+                lobby_button.update(WIN)
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if lobby_button.checkForInput(MENU_MOUSE_POS):
+                        player_x = 200
+                        player_y = 400
+                        game_state = "lobby"
+                        game_over = False
 
             elif game_state == "lobby":
                 WIN = screens.draw_lobby()
-                MENU_MOUSE_POS = pygame.mouse.get_pos()
                 scarlet_button = classes.ImageButton(image=pygame.image.load("images/miss scarlet.JPG"), pos=(800*.25, 725*.25), name="Miss Scarlet")
                 colonel_button = classes.ImageButton(image=pygame.image.load("images/colonel mustard.JPG"), pos=(800*.5, 725*.25), name="Colonel Mustard")
                 green_button = classes.ImageButton(image=pygame.image.load("images/mr green.JPG"), pos=(800*.75, 725*.25), name="Mr. Green")
                 peacock_button = classes.ImageButton(image=pygame.image.load("images/mrs peacock.JPG"), pos=(800*.25, 725*.75), name="Mrs. Peacock")
                 white_button = classes.ImageButton(image=pygame.image.load("images/mrs white.JPG"), pos=(800*.5, 725*.75), name="Mrs. White")
                 plum_button = classes.ImageButton(image=pygame.image.load("images/prof plum.JPG"), pos=(800*.75, 725*.75), name="Professor Plum")
-                for button in [scarlet_button, colonel_button, green_button, peacock_button, white_button, plum_button]:
+                player_button = classes.ImageButton(image=pygame.image.load("images/add player button.png"), pos=(800*.3, 680), name="Add Player")
+                start_button = classes.ImageButton(image=pygame.image.load("images/start game button.png"), pos=(800*.7, 680), name="Start Game")
+                for button in [scarlet_button, colonel_button, green_button, peacock_button, white_button, plum_button, start_button, player_button]:
                     button.update(WIN)
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     for button in [scarlet_button, colonel_button, green_button, peacock_button, white_button, plum_button]:
                         if button.checkForInput(MENU_MOUSE_POS):
                             title = 'Youve selected ' + button.name
+                            curr_char = button.name
+                    if player_button.checkForInput(MENU_MOUSE_POS):
+                        title = "Player Added!"
+                        game_players.append(classes.Player(name, curr_char))
+                        functions.printPlayers(game_players)
+                    if start_button.checkForInput(MENU_MOUSE_POS):
+                        player_x = 200
+                        player_y = 400
+                        game_state = "game_screen"
+                        game_over = False
                     if name_box.collidepoint(event.pos):
                         active = True
                     else:
@@ -76,15 +90,15 @@ def main():
                 WIN.blit(surf,(name_box.x+5, name_box.y-5))
                 WIN.blit(titlerend,(400-titlerend.get_width()/2,300))
                 name_box.w = max(300, surf.get_width()+10)
-                if event.type == pygame.K_SPACE:
-                    player_x = 200
-                    player_y = 400
-                    game_state = "game_screen"
-                    game_over = False
-
 
             elif game_state == "game_screen":
                 screens.draw_game_screen()
+                move_button = classes.ImageButton(image=pygame.image.load("images/move-player.png"), pos=(800*.3, 680), name="Move Player")
+                end_button = classes.ImageButton(image=pygame.image.load("images/end-turn.png"), pos=(800*.7, 680), name="End Turn")
+                suggestion_button = classes.ImageButton(image=pygame.image.load("images/make-suggestion.png"), pos=(800*.3, 45), name="Make Suggestion")
+                accusation_button = classes.ImageButton(image=pygame.image.load("images/make-accusation.png"), pos=(800*.7, 45), name="Make Accusation")
+                for button in [move_button, end_button, suggestion_button, accusation_button]:
+                    button.update(WIN)
                 keys = pygame.key.get_pressed()
                 if keys[pygame.K_BACKSPACE]:
                     player_x = 200
