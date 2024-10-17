@@ -1,4 +1,5 @@
 import pygame
+import pygame_gui
 
 WIDTH, HEIGHT = 800, 725
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -24,16 +25,15 @@ def draw_lobby():
     WIN.fill((0, 0, 0))
     font = pygame.font.SysFont('comicsansms', 40)
     title = font.render('Please Select Your Character', True, (255, 255, 255))
-    name_button = font.render('Player Name', True, (255, 255, 255))
     WIN.blit(title, (WIDTH/2 - title.get_width()/2, 0.4*HEIGHT))
-    WIN.blit(name_button, (WIDTH/2 - name_button.get_width()/2, 0.5*HEIGHT))
-    WIN.blit(scarletImg,(WIDTH *.1,HEIGHT *.1))
+    #WIN.blit(scarletImg,(WIDTH *.1,HEIGHT *.1))
     WIN.blit(colonelImg,(WIDTH *.4,HEIGHT *.1))
     WIN.blit(greenImg,(WIDTH *.7,HEIGHT *.1))
     WIN.blit(peacockImg,(WIDTH *.1,HEIGHT *.6))
     WIN.blit(whiteImg,(WIDTH *.4,HEIGHT *.6))
     WIN.blit(plumImg,(WIDTH *.7,HEIGHT *.6))
     pygame.display.update()
+    return WIN
 
 def draw_game_screen():
     WIN.blit(BG, (0,0))
