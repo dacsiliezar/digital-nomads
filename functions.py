@@ -20,5 +20,8 @@ def makeAccusation(guess: classes.Guess, player: classes.Player, correct_guess: 
         print("Incorrect! The game is over. The correct answer was:")
         print(vars(correct_guess))
 
-#def nextTurn():
- #   return
+#def addLocations(locList, locSpot, xCoord, yCoord):
+#    for i in range(locSpot):
+#        newSpot = classes.Location(locSpot[i],xCoord[i],yCoord[i])
+#        locList.append(newSpot)
+ #   return locList
