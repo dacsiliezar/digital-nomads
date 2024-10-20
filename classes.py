@@ -9,10 +9,11 @@ class Guess:
     room = ""
     character = ""
 
-#class Location():
- #   rooms = ["Study", "Hall", "Lounge", "Library", "Billiard Room", "Dining Room", "Conservatory", "Ballroom", "Kitchen"]
-  #  roomX = [218,398,579,223,391,574,212,398,590]
-   # roomY = [204,236,226,325,360,392,571,537,550]
+class Location():
+	def __init__(self, loc, x, y):
+		self.loc = loc
+		self.x = x
+		self.y = y
 
 class ImageButton():
 	def __init__(self, image, pos, name):
@@ -30,11 +31,14 @@ class ImageButton():
 			return True
 		return False
 
+class CharacterStarts():
+	def __init__(self, character, x, y):
+		self.character = character
+		self.x = x
+		self.y = y
 
 weapons = ["Candlestick", "Wrench", "Lead Pipe", "Rope", "Dagger", "Revolver"]
-hallways = [1,2,3,4,5,6,7,8,9,10,11,12]
-#hallX = 
-#hallY = 
 characters = ["Miss Scarlet", "Colonel Mustard", "Professor Plum", "Mrs. Peacock", "Mr. Green", "Mrs. White"]
-
+characterX = [483,220,572,218,295,504]
+characterY = [214,258,306,495,554,547]
 secret_passages = ["Study-Kitchen","Lounge-Conservatory"]
