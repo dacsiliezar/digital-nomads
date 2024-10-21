@@ -41,9 +41,17 @@ def addLocations():
 
 def addCharacters(gameplayers, WIN):
     characterList = []
+    characterbuttons = []
     characters = ["Miss Scarlet", "Colonel Mustard", "Professor Plum", "Mrs. Peacock", "Mr. Green", "Mrs. White"]
     characterX = [483,220,572,218,295,504]
     characterY = [214,258,306,495,554,547]
+    scarlet_button = classes.ImageButton(image=pygame.image.load("images/scar_button.png"), pos=(483,214), name="Miss Scarlet")
+    colonel_button = classes.ImageButton(image=pygame.image.load("images/mustard_button.png"), pos=(220,258), name="Colonel Mustard")
+    green_button = classes.ImageButton(image=pygame.image.load("images/green_button.png"), pos=(572,306), name="Mr. Green")
+    peacock_button = classes.ImageButton(image=pygame.image.load("images/peacock_button.png"), pos=(218, 495), name="Mrs. Peacock")
+    white_button = classes.ImageButton(image=pygame.image.load("images/white_button.png"), pos=(295, 554), name="Mrs. White")
+    plum_button = classes.ImageButton(image=pygame.image.load("images/plum_button.png"), pos=(504,547), name="Professor Plum")
+
     for char in gameplayers:
         counter = 0
         for charlist in characters:
@@ -51,9 +59,19 @@ def addCharacters(gameplayers, WIN):
                 newchar = classes.CharacterStarts(char.character,characterX[counter],characterY[counter])
                 characterList.append(newchar)
             counter = counter + 1
-    return characterList
+    for button in [scarlet_button, colonel_button, green_button, peacock_button, white_button, plum_button]:
+        for char in characterList:
+            if button.name == char.character:
+                button.update(WIN)
+                characterbuttons.append(button)
+    return characterList, characterbuttons
 def printMoves(locations, WIN):
+    possmoves = []
     for move in locations:
-        color = pygame.Color('green2')
-        loc_box = pygame.Rect(move.x-25,move.y-25,50,50)
-        pygame.draw.rect(WIN,color,loc_box,3)
+        move_button = classes.ImageButton(image=pygame.image.load("images/move_button.png"), pos=(move.x,move.y), name="move button")
+        move_button.update(WIN)
+        #color = pygame.Color('green2')
+        #loc_box = pygame.Rect(move.x-25,move.y-25,50,50)
+        #pygame.draw.rect(WIN,color,loc_box,3)
+        possmoves.append(move_button)
+    return possmoves

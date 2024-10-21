@@ -25,7 +25,7 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 202,
+          "DockedWidth": 154,
           "SelectedChildIndex": 1,
           "Children": [
             {
@@ -49,7 +49,7 @@
               "RelativeDocumentMoniker": "functions.py",
               "ToolTip": "C:\\Users\\10mar\\source\\repos\\dacsiliezar\\digital-nomads\\functions.py",
               "RelativeToolTip": "functions.py",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAAADUAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABMAAAAAAAAAAAAAAEMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2024-10-16T21:38:45.91Z",
               "EditorCaption": ""
@@ -62,7 +62,7 @@
               "RelativeDocumentMoniker": "screens.py",
               "ToolTip": "C:\\Users\\10mar\\source\\repos\\dacsiliezar\\digital-nomads\\screens.py",
               "RelativeToolTip": "screens.py",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAnAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2024-10-16T00:02:06.635Z",
               "EditorCaption": ""
@@ -70,7 +70,7 @@
           ]
         },
         {
-          "DockedWidth": 198,
+          "DockedWidth": 246,
           "SelectedChildIndex": 0,
           "Children": [
             {
@@ -81,7 +81,7 @@
               "RelativeDocumentMoniker": "clue-less.py",
               "ToolTip": "C:\\Users\\10mar\\source\\repos\\dacsiliezar\\digital-nomads\\clue-less.py",
               "RelativeToolTip": "clue-less.py",
-              "ViewState": "AgIAAGAAAAAAAAAAAAAAAEoAAAAGAAAAAAAAAA==",
+              "ViewState": "AgIAAGIAAAAAAAAAAIAwwI8AAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2024-10-15T21:19:41.916Z",
               "EditorCaption": ""

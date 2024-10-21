@@ -23,6 +23,7 @@ def main():
     endgameprompt = None
     hasnotsuggested = True
     hasnotaccused = True
+    initialdrawing = True
     game_state = "home_screen"
     white = pygame.Color('white')
     color_passive = pygame.Color('gray15')
@@ -33,6 +34,8 @@ def main():
     font = pygame.font.SysFont('comicsansms',40)
     name_box = pygame.Rect(250,725/2,300,50)
     game_players = []
+    playerlist = []
+    playerbuttons = []
     curr_char = ""
     locations = functions.addLocations()
     while run:
@@ -106,7 +109,8 @@ def main():
                 end_button = classes.ImageButton(image=pygame.image.load("images/end-turn.png"), pos=(800*.7, 680), name="End Turn")
                 suggestion_button = classes.ImageButton(image=pygame.image.load("images/make-suggestion.png"), pos=(800*.3, 45), name="Make Suggestion")
                 accusation_button = classes.ImageButton(image=pygame.image.load("images/make-accusation.png"), pos=(800*.7, 45), name="Make Accusation")
-                playerlist = functions.addCharacters(game_players, WIN)
+                playerlist, playerbuttons = functions.addCharacters(game_players, WIN)
+
                 for button in [move_button, end_button, suggestion_button, accusation_button]:
                     button.update(WIN)
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -131,7 +135,13 @@ def main():
                         endgameprompt = font.render('Game Over!', True, (255, 255, 255))
                 if moveprompt:
                     WIN.blit(moveprompt, (400 - moveprompt.get_width()/2, 80))
-                    functions.printMoves(locations, WIN)
+                    possmoves = functions.printMoves(locations, WIN)
+                    #for move in possmoves:
+                     #   if event.type == pygame.MOUSEBUTTONDOWN:
+                      #      if move.checkForInput(MENU_MOUSE_POS):
+                       #         playerbuttons[0].x_pos = move.x_pos
+                        #        playerbuttons[0].y_pos = move.y_pos
+                         #       playerbuttons[0].update(WIN)
                 if suggestprompt:
                     WIN.blit(suggestprompt, (400 - suggestprompt.get_width()/2, 80))
                     pygame.display.update()
