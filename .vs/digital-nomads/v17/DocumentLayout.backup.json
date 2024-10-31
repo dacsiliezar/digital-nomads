@@ -25,9 +25,22 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 154,
-          "SelectedChildIndex": 1,
+          "DockedWidth": 246,
+          "SelectedChildIndex": 3,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "screens.py",
+              "DocumentMoniker": "C:\\Users\\10mar\\source\\repos\\dacsiliezar\\digital-nomads\\screens.py",
+              "RelativeDocumentMoniker": "screens.py",
+              "ToolTip": "C:\\Users\\10mar\\source\\repos\\dacsiliezar\\digital-nomads\\screens.py",
+              "RelativeToolTip": "screens.py",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-10-31T01:16:50.297Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 2,
@@ -36,9 +49,9 @@
               "RelativeDocumentMoniker": "classes.py",
               "ToolTip": "C:\\Users\\10mar\\source\\repos\\dacsiliezar\\digital-nomads\\classes.py",
               "RelativeToolTip": "classes.py",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACUAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAQwBsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-10-16T21:41:43.756Z",
+              "WhenOpened": "2024-10-31T00:12:47.297Z",
               "EditorCaption": ""
             },
             {
@@ -49,30 +62,11 @@
               "RelativeDocumentMoniker": "functions.py",
               "ToolTip": "C:\\Users\\10mar\\source\\repos\\dacsiliezar\\digital-nomads\\functions.py",
               "RelativeToolTip": "functions.py",
-              "ViewState": "AgIAABMAAAAAAAAAAAAAAEMAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAEYAAAAAAAAAAAAuwEsAAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-10-16T21:38:45.91Z",
+              "WhenOpened": "2024-10-31T00:09:24.585Z",
               "EditorCaption": ""
             },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "screens.py",
-              "DocumentMoniker": "C:\\Users\\10mar\\source\\repos\\dacsiliezar\\digital-nomads\\screens.py",
-              "RelativeDocumentMoniker": "screens.py",
-              "ToolTip": "C:\\Users\\10mar\\source\\repos\\dacsiliezar\\digital-nomads\\screens.py",
-              "RelativeToolTip": "screens.py",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-10-16T00:02:06.635Z",
-              "EditorCaption": ""
-            }
-          ]
-        },
-        {
-          "DockedWidth": 246,
-          "SelectedChildIndex": 0,
-          "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -81,7 +75,7 @@
               "RelativeDocumentMoniker": "clue-less.py",
               "ToolTip": "C:\\Users\\10mar\\source\\repos\\dacsiliezar\\digital-nomads\\clue-less.py",
               "RelativeToolTip": "clue-less.py",
-              "ViewState": "AgIAAGIAAAAAAAAAAIAwwI8AAAAaAAAAAAAAAA==",
+              "ViewState": "AgIAADYAAAAAAAAAAAAlwDgAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2024-10-15T21:19:41.916Z",
               "EditorCaption": ""

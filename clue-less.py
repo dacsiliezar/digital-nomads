@@ -24,6 +24,7 @@ def main():
     hasnotsuggested = True
     hasnotaccused = True
     initialdrawing = True
+    initiating_game_screen = True
     game_state = "home_screen"
     white = pygame.Color('white')
     color_passive = pygame.Color('gray15')
@@ -109,8 +110,11 @@ def main():
                 end_button = classes.ImageButton(image=pygame.image.load("images/end-turn.png"), pos=(800*.7, 680), name="End Turn")
                 suggestion_button = classes.ImageButton(image=pygame.image.load("images/make-suggestion.png"), pos=(800*.3, 45), name="Make Suggestion")
                 accusation_button = classes.ImageButton(image=pygame.image.load("images/make-accusation.png"), pos=(800*.7, 45), name="Make Accusation")
-                playerlist, playerbuttons = functions.addCharacters(game_players, WIN)
-
+                if initiating_game_screen:
+                    playerlist, playerbuttons = functions.addCharacters(game_players, WIN)
+                    initiating_game_screen = False
+                for players in playerbuttons:
+                    players.update(WIN)
                 for button in [move_button, end_button, suggestion_button, accusation_button]:
                     button.update(WIN)
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -135,13 +139,14 @@ def main():
                         endgameprompt = font.render('Game Over!', True, (255, 255, 255))
                 if moveprompt:
                     WIN.blit(moveprompt, (400 - moveprompt.get_width()/2, 80))
-                    possmoves = functions.printMoves(locations, WIN)
-                    #for move in possmoves:
-                     #   if event.type == pygame.MOUSEBUTTONDOWN:
-                      #      if move.checkForInput(MENU_MOUSE_POS):
-                       #         playerbuttons[0].x_pos = move.x_pos
-                        #        playerbuttons[0].y_pos = move.y_pos
-                         #       playerbuttons[0].update(WIN)
+                    possmoves = functions.printMoves(locations, playerbuttons[0], WIN)
+                    for move in possmoves:
+                        if event.type == pygame.MOUSEBUTTONDOWN:
+                            if move.checkForInput(MENU_MOUSE_POS):
+                                playerbuttons[0] = functions.movePlayer(playerbuttons[0],move,WIN)
+                                moveprompt = False
+                                print('clicked inside')
+                                print(playerbuttons)
                 if suggestprompt:
                     WIN.blit(suggestprompt, (400 - suggestprompt.get_width()/2, 80))
                     pygame.display.update()

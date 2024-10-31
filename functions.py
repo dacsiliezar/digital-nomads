@@ -65,13 +65,103 @@ def addCharacters(gameplayers, WIN):
                 button.update(WIN)
                 characterbuttons.append(button)
     return characterList, characterbuttons
-def printMoves(locations, WIN):
+
+def printMoves(locations, playerbutton, WIN):
     possmoves = []
+    possmovebuttons = []
     for move in locations:
+        if move.x == playerbutton.x_pos and move.y == playerbutton.y_pos:
+            if move.loc == "Study":
+                for validmove in locations:
+                    if validmove.loc == 1 or validmove.loc == 3:
+                        possmoves.append(validmove)
+            if move.loc == "Hall":
+                for validmove in locations:
+                    if validmove.loc == 1 or validmove.loc == 2 or validmove.loc == 4:
+                        possmoves.append(validmove)
+            if move.loc == "Lounge":
+                for validmove in locations:
+                    if validmove.loc == 2 or validmove.loc == 5:
+                        possmoves.append(validmove)
+            if move.loc == "Library":
+                for validmove in locations:
+                    if validmove.loc == 3 or validmove.loc == 6 or validmove.loc == 8:
+                        possmoves.append(validmove)
+            if move.loc == "Billiard Room":
+                for validmove in locations:
+                    if validmove.loc == 4 or validmove.loc == 6 or validmove.loc == 7 or validmove.loc == 9:
+                        possmoves.append(validmove)
+            if move.loc == "Dining Room":
+                for validmove in locations:
+                    if validmove.loc == 5 or validmove.loc == 7 or validmove.loc == 10:
+                        possmoves.append(validmove)
+            if move.loc == "Conservatory":
+                for validmove in locations:
+                    if validmove.loc == 8 or validmove.loc == 11:
+                        possmoves.append(validmove)
+            if move.loc == "Ballroom":
+                for validmove in locations:
+                    if validmove.loc == 9 or validmove.loc == 11 or validmove.loc == 12:
+                        possmoves.append(validmove)
+            if move.loc == "Kitchen":
+                for validmove in locations:
+                    if validmove.loc == 10 or validmove.loc == 12:
+                        possmoves.append(validmove)
+            if move.loc == 1:
+                for validmove in locations:
+                    if validmove.loc == "Study" or validmove.loc == "Hall":
+                        possmoves.append(validmove)
+            if move.loc == 2:
+                for validmove in locations:
+                    if validmove.loc == "Hall" or validmove.loc == "Lounge":
+                        possmoves.append(validmove)
+            if move.loc == 3:
+                for validmove in locations:
+                    if validmove.loc == "Study" or validmove.loc == "Library":
+                        possmoves.append(validmove)
+            if move.loc == 4:
+                for validmove in locations:
+                    if validmove.loc == "Hall" or validmove.loc == "Billiard Room":
+                        possmoves.append(validmove)
+            if move.loc == 5:
+                for validmove in locations:
+                    if validmove.loc == "Lounge" or validmove.loc == "Dining Room":
+                        possmoves.append(validmove)
+            if move.loc == 6:
+                for validmove in locations:
+                    if validmove.loc == "Billiard Room" or validmove.loc == "Library":
+                        possmoves.append(validmove)
+            if move.loc == 7:
+                for validmove in locations:
+                    if validmove.loc == "Dining Room" or validmove.loc == "Billiard Room":
+                        possmoves.append(validmove)
+            if move.loc == 8:
+                for validmove in locations:
+                    if validmove.loc == "Library" or validmove.loc == "Conservatory":
+                        possmoves.append(validmove)
+            if move.loc == 9:
+                for validmove in locations:
+                    if validmove.loc == "Billiard Room" or validmove.loc == "Ballroom":
+                        possmoves.append(validmove)
+            if move.loc == 10:
+                for validmove in locations:
+                    if validmove.loc == "Dining Room" or validmove.loc == "Kitchen":
+                        possmoves.append(validmove)
+            if move.loc == 11:
+                for validmove in locations:
+                    if validmove.loc == "Conservatory" or validmove.loc == "Ballroom":
+                        possmoves.append(validmove)
+            if move.loc == 12:
+                for validmove in locations:
+                    if validmove.loc == "Ballroom" or validmove.loc == "Kitchen":
+                        possmoves.append(validmove)
+    for move in possmoves:
         move_button = classes.ImageButton(image=pygame.image.load("images/move_button.png"), pos=(move.x,move.y), name="move button")
         move_button.update(WIN)
-        #color = pygame.Color('green2')
-        #loc_box = pygame.Rect(move.x-25,move.y-25,50,50)
-        #pygame.draw.rect(WIN,color,loc_box,3)
-        possmoves.append(move_button)
-    return possmoves
+        possmovebuttons.append(move_button)
+    return possmovebuttons
+
+def movePlayer(playerbutton, move, WIN):
+    updated_playerbutton = classes.ImageButton(image=playerbutton.image, pos=(move.x_pos,move.y_pos), name=playerbutton.name)
+    playerbutton.update(WIN)
+    return updated_playerbutton
