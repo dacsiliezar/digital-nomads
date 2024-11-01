@@ -1,7 +1,13 @@
+from re import X
+
+
 class Player:
-	def __init__(self, name, character):
+	def __init__(self, name, character, x, y, playerbutton):
 		self.name = name
 		self.character = character
+		self.x = x
+		self.y = y
+		self.playerbutton = playerbutton
 		self.turn = False
 
 class Guess:

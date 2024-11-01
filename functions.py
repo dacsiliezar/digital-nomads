@@ -42,7 +42,7 @@ def addLocations():
 def addCharacters(gameplayers, WIN):
     characterList = []
     characterbuttons = []
-    characters = ["Miss Scarlet", "Colonel Mustard", "Professor Plum", "Mrs. Peacock", "Mr. Green", "Mrs. White"]
+    characters = ["Miss Scarlet", "Professor Plum", "Mrs. Peacock", "Mr. Green", "Mrs. White", "Colonel Mustard",]
     characterX = [483,220,572,218,295,504]
     characterY = [214,258,306,495,554,547]
     scarlet_button = classes.ImageButton(image=pygame.image.load("images/scar_button.png"), pos=(483,214), name="Miss Scarlet")
@@ -56,15 +56,16 @@ def addCharacters(gameplayers, WIN):
         counter = 0
         for charlist in characters:
             if char.character == charlist:
-                newchar = classes.CharacterStarts(char.character,characterX[counter],characterY[counter])
+                newchar = classes.Player(char.name, char.character,characterX[counter],characterY[counter], None)
+                if newchar.character == "Miss Scarlet":
+                    newchar.turn = True
+                for button in [scarlet_button, colonel_button, green_button, peacock_button, white_button, plum_button]:
+                    if button.name == newchar.character:
+                        newchar.playerbutton = button
+                        newchar.playerbutton.update(WIN)
                 characterList.append(newchar)
             counter = counter + 1
-    for button in [scarlet_button, colonel_button, green_button, peacock_button, white_button, plum_button]:
-        for char in characterList:
-            if button.name == char.character:
-                button.update(WIN)
-                characterbuttons.append(button)
-    return characterList, characterbuttons
+    return characterList
 
 def printMoves(locations, playerbutton, WIN):
     possmoves = []
