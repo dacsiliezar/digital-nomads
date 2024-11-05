@@ -1,17 +1,22 @@
 import classes
 import pygame
+import random
 
+##### INITIAL FUNCTION TO GO FROM ENTRY SCREEN INTO LOBBY #####
 def joinGame():
     print("Welcome to Clue-Less! Please choose your character")
 
+##### PRINTS ALL PLAYERS TO TERMINAL SO YOU CAN SEE ALL THEIR DATA #####
 def printPlayers(players_list):
     for i in players_list:
         print(vars(i))
 
+##### WHEN PLAYER SELECTS OPTION TO MAKE A SUGGESTION #####
 def makeSuggestion(guess: classes.Guess, player: classes.Player):
     print(player.name, " has made a suggestion:")
     print(vars(guess))
 
+##### WHEN PLAYER SELECTS OPTION TO MAKE AN ACCUSATION #####
 def makeAccusation(guess: classes.Guess, player: classes.Player, correct_guess: classes.Guess):
     print(player.name, " has accused:")
     print(vars(guess))
@@ -21,6 +26,7 @@ def makeAccusation(guess: classes.Guess, player: classes.Player, correct_guess: 
         print("Incorrect! The game is over. The correct answer was:")
         print(vars(correct_guess))
 
+##### ADDS ALL POSSIBLE LOCATIONS INTO A LIST #####
 def addLocations():
     data = []
     rooms = ["Study", "Hall", "Lounge", "Library", "Billiard Room", "Dining Room", "Conservatory", "Ballroom", "Kitchen"]
@@ -39,10 +45,11 @@ def addLocations():
       data.append(newdata)
     return data
 
+##### ADDS CHARACTERS THAT HAVE BEEN SELECTED INTO THE GAME #####
 def addCharacters(gameplayers, WIN):
     characterList = []
     characterbuttons = []
-    characters = ["Miss Scarlet", "Professor Plum", "Mrs. Peacock", "Mr. Green", "Mrs. White", "Colonel Mustard",]
+    characters = ["Miss Scarlet", "Professor Plum", "Mrs. Peacock", "Mr. Green", "Mrs. White", "Colonel Mustard"]
     characterX = [483,220,572,218,295,504]
     characterY = [214,258,306,495,554,547]
     scarlet_button = classes.ImageButton(image=pygame.image.load("images/scar_button.png"), pos=(483,214), name="Miss Scarlet")
@@ -67,6 +74,7 @@ def addCharacters(gameplayers, WIN):
             counter = counter + 1
     return characterList
 
+##### SHOWS POSSIBLE OPTIONS FOR MOVEMENT WHEN PLAYER CHOOSES TO MOVE #####
 def printMoves(locations, playerbutton, WIN):
     possmoves = []
     possmovebuttons = []
@@ -162,7 +170,31 @@ def printMoves(locations, playerbutton, WIN):
         possmovebuttons.append(move_button)
     return possmovebuttons
 
+##### UPDATES PLAYER POSITION IF THEY CHOOSE ACCEPTABLE MOVEMENT #####
 def movePlayer(playerbutton, move, WIN):
     updated_playerbutton = classes.ImageButton(image=playerbutton.image, pos=(move.x_pos,move.y_pos), name=playerbutton.name)
     playerbutton.update(WIN)
     return updated_playerbutton
+
+##### DEALS ALL CARDS AND GENERATES CORRECT GUESS WHEN GAME IS STARTED #####
+def dealCards(gameplayers, correctGuess: classes.Guess):
+    rooms = ["Study", "Hall", "Lounge", "Library", "Billiard Room", "Dining Room", "Conservatory", "Ballroom", "Kitchen"]
+    characters = ["Miss Scarlet", "Professor Plum", "Mrs. Peacock", "Mr. Green", "Mrs. White", "Colonel Mustard"]
+    weapons = ["Candlestick", "Wrench", "Lead Pipe", "Rope", "Dagger", "Revolver"]
+    correctGuess.room = random.choice(rooms)
+    correctGuess.character = random.choice(characters)
+    correctGuess.weapon = random.choice(weapons)
+    remainingCards = rooms + characters + weapons
+    remainingCards.remove(correctGuess.room)
+    remainingCards.remove(correctGuess.character)
+    remainingCards.remove(correctGuess.weapon)
+    openCards = random.sample(remainingCards,(len(remainingCards)%len(gameplayers)))
+    for card in openCards:
+        remainingCards.remove(card)
+    numcards = int(len(remainingCards)/len(gameplayers))
+    for j in range(len(gameplayers)):
+        for i in range(numcards):
+            randomcard = random.choice(remainingCards)
+            remainingCards.remove(randomcard)
+            gameplayers[j].cards.append(randomcard)
+    return gameplayers, correctGuess, openCards

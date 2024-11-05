@@ -9,6 +9,7 @@ class Player:
 		self.y = y
 		self.playerbutton = playerbutton
 		self.turn = False
+		self.cards = []
 
 class Guess:
     weapon = ""

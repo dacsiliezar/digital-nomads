@@ -27,6 +27,7 @@ def main():
     hasnotendedturn = True
     initialdrawing = True
     initiating_game_screen = True
+    correctGuess = classes.Guess()
     game_state = "home_screen"
     white = pygame.Color('white')
     color_passive = pygame.Color('gray15')
@@ -39,6 +40,7 @@ def main():
     game_players = []
     playerlist = []
     playerbuttons = []
+    openCards = []
     curr_char = ""
     locations = functions.addLocations()
 
@@ -103,12 +105,12 @@ def main():
                 move_button, end_button, suggestion_button, accusation_button = screens.draw_game_screen()
                 if initiating_game_screen:
                     playerlist = functions.addCharacters(game_players, WIN)
+                    game_players, correctGuess, openCards = functions.dealCards(game_players, correctGuess)
                     initiating_game_screen = False
                 for players in playerlist:
                     players.playerbutton.update(WIN)
                 for player in playerlist:
                     if player.turn == True:
-                        print(player.character, player.turn)
                         if event.type == pygame.MOUSEBUTTONDOWN:
                             if move_button.checkForInput(MENU_MOUSE_POS):
                                 moveprompt = font.render('Please select movement', True, (255, 255, 255))
@@ -161,22 +163,21 @@ def main():
                                 charinput = input()
                                 print("Please select weapon")
                                 weaponinput = input()
-                                finalaccusation = 'Player Accused: ' + roominput + ' ' + charinput + ' ' + weaponinput
+                                if roominput == correctGuess.room and charinput == correctGuess.character and weaponinput == correctGuess.weapon:
+                                    finalaccusation = 'Player wins!'
+                                else:
+                                    finalaccusation = 'Player loses!'
                                 accusationprompt = font.render(finalaccusation, True, (255, 255, 255))
                                 hasnotaccused = False
                         if endturnprompt:
-                            print(player.character, player.turn)
                             if hasnotendedturn:
                                 if playerlist.index(player) < len(playerlist)-1:
                                     playerlist[playerlist.index(player)+1].turn = True
                                 else:
                                     playerlist[0].turn = True
-                                print(player.character, player.turn)
                                 hasnotendedturn = False
-                            print(player.character, player.turn)
                             endturnprompt = False
-                            player.turn = False  
-                            print(player.character, player.turn)
+                            player.turn = False
 
             ##### END SCREEN #####
             elif game_state == "end_screen":
