@@ -18,13 +18,13 @@ def main():
     ##### INITIALIZING VARIABLES #####
     run = True
     active = False
-    moveprompt = None
-    suggestprompt = None
-    accusationprompt = None
-    endturnprompt = None
+    font = pygame.font.SysFont('comicsansms',40)
+    prompt = font.render(' ', True, (255, 255, 255))
     hasnotsuggested = True
     hasnotaccused = True
     hasnotendedturn = True
+    hasnotchosenmove = True
+    displaymoves = False
     initialdrawing = True
     initiating_game_screen = True
     correctGuess = classes.Guess()
@@ -35,11 +35,10 @@ def main():
     color = color_passive
     name = "Type Name"
     title = 'Please select your character'
-    font = pygame.font.SysFont('comicsansms',40)
     name_box = pygame.Rect(250,725/2,300,50)
     game_players = []
-    playerlist = []
     playerbuttons = []
+    possmovebuttons = []
     openCards = []
     curr_char = ""
     locations = functions.addLocations()
@@ -104,80 +103,64 @@ def main():
             elif game_state == "game_screen":
                 move_button, end_button, suggestion_button, accusation_button = screens.draw_game_screen()
                 if initiating_game_screen:
-                    playerlist = functions.addCharacters(game_players, WIN)
+                    game_players = functions.addCharacters(game_players, WIN)
                     game_players, correctGuess, openCards = functions.dealCards(game_players, correctGuess)
                     initiating_game_screen = False
-                for players in playerlist:
+                if len(openCards) != 0:
+                    functions.showOpenCards(openCards, WIN)
+                for players in game_players:
                     players.playerbutton.update(WIN)
-                for player in playerlist:
+                for player in game_players:
                     if player.turn == True:
+                        hasnotchosenmove = True
+                        coverbox = pygame.Rect(685,150,115,500)
+                        functions.showPlayerCards(player.cards, WIN)
+                        WIN.blit(prompt, (400 - prompt.get_width()/2, 80))
                         if event.type == pygame.MOUSEBUTTONDOWN:
+                            ### PLAY CHOOSES TO MOVE THEIR CHARACTER ###
                             if move_button.checkForInput(MENU_MOUSE_POS):
-                                moveprompt = font.render('Please select movement', True, (255, 255, 255))
-                                suggestprompt = None
-                                endgameprompt = None
-                                accusationprompt = None
-                            if suggestion_button.checkForInput(MENU_MOUSE_POS):
-                                suggestprompt = font.render('Please enter suggestion', True, (255, 255, 255))
-                                moveprompt = None
-                                endgameprompt = None
-                                accusationprompt = None
-                                hasnotsuggested = True
-                            if accusation_button.checkForInput(MENU_MOUSE_POS):
-                                accusationprompt = font.render('Please enter accusation', True, (255, 255, 255))
-                                moveprompt = None
-                                suggestprompt = None
-                                endgameprompt = None
-                                hasnotaccused = True
-                            if end_button.checkForInput(MENU_MOUSE_POS):
-                                endturnprompt = font.render('Turn Over!', True, (255, 255, 255))
                                 hasnotendedturn = True
-                        if moveprompt:
-                            WIN.blit(moveprompt, (400 - moveprompt.get_width()/2, 80))
-                            possmoves = functions.printMoves(locations, player.playerbutton, WIN)
-                            for move in possmoves:
+                                coverbox = pygame.Rect(0,80,800,50)
+                                prompt = font.render('Please select movement', True, (255, 255, 255))
+                                WIN.blit(prompt, (400 - prompt.get_width()/2, 80))
+                                pygame.display.update()
+                                displaymoves = True
+                            ### PLAYER CHOOSES TO MAKE A SUGGESTION ###
+                            if suggestion_button.checkForInput(MENU_MOUSE_POS):
+                                hasnotendedturn = True
+                                coverbox = pygame.Rect(0,80,800,50)
+                                prompt = font.render('Please enter suggestion', True, (255, 255, 255))
+                                WIN.blit(prompt, (400 - prompt.get_width()/2, 80))
+                                pygame.display.update()
+                                if hasnotsuggested:
+                                    prompt, hasnotsuggested = functions.makeSuggestion()
+                                pygame.display.update()
+                            ### PLAYER CHOOSES TO MAKE AN ACCUSATION ###
+                            if accusation_button.checkForInput(MENU_MOUSE_POS):
+                                hasnotendedturn = True
+                                coverbox = pygame.Rect(0,80,800,50)
+                                prompt = font.render('Please enter accusation', True, (255, 255, 255))
+                                WIN.blit(prompt, (400 - prompt.get_width()/2, 80))
+                                pygame.display.update()
+                                if hasnotaccused:
+                                    prompt, hasnotaccused = functions.makeAccusation(correctGuess)
+                                pygame.display.update()
+                            ### PLAYER CHOOSES TO END THEIR TURN ###
+                            if end_button.checkForInput(MENU_MOUSE_POS):
+                                coverbox = pygame.Rect(0,80,800,50)
+                                prompt = font.render('Turn Over!', True, (255, 255, 255))
+                                hasnotaccused = True
+                                hasnotsuggested = True
+                                if hasnotendedturn:
+                                    game_players = functions.endTurn(game_players, player)
+                                    hasnotendedturn = False
+                        if displaymoves:
+                            possmovebuttons = functions.printMoves(locations, player.playerbutton, WIN)
+                            for move in possmovebuttons:
                                 if event.type == pygame.MOUSEBUTTONDOWN:
                                     if move.checkForInput(MENU_MOUSE_POS):
-                                        player.playerbutton = functions.movePlayer(player.playerbutton,move,WIN)
-                                        moveprompt = False
-                        if suggestprompt:
-                            WIN.blit(suggestprompt, (400 - suggestprompt.get_width()/2, 80))
-                            pygame.display.update()
-                            if hasnotsuggested:
-                                print("Please select room")
-                                roominput = input()
-                                print("Please select character")
-                                charinput = input()
-                                print("Please select weapon")
-                                weaponinput = input()
-                                finalsuggest = 'Player Guessed: ' + roominput + ' ' + charinput + ' ' + weaponinput
-                                suggestprompt = font.render(finalsuggest, True, (255, 255, 255))
-                                hasnotsuggested = False
-                        if accusationprompt:
-                            WIN.blit(accusationprompt, (400 - accusationprompt.get_width()/2, 80))
-                            pygame.display.update()
-                            if hasnotaccused:
-                                print("Please select room")
-                                roominput = input()
-                                print("Please select character")
-                                charinput = input()
-                                print("Please select weapon")
-                                weaponinput = input()
-                                if roominput == correctGuess.room and charinput == correctGuess.character and weaponinput == correctGuess.weapon:
-                                    finalaccusation = 'Player wins!'
-                                else:
-                                    finalaccusation = 'Player loses!'
-                                accusationprompt = font.render(finalaccusation, True, (255, 255, 255))
-                                hasnotaccused = False
-                        if endturnprompt:
-                            if hasnotendedturn:
-                                if playerlist.index(player) < len(playerlist)-1:
-                                    playerlist[playerlist.index(player)+1].turn = True
-                                else:
-                                    playerlist[0].turn = True
-                                hasnotendedturn = False
-                            endturnprompt = False
-                            player.turn = False
+                                        player.playerbutton = functions.movePlayer(player.playerbutton, move, WIN)
+                                        displaymoves = False
 
             ##### END SCREEN #####
             elif game_state == "end_screen":

@@ -12,19 +12,42 @@ def printPlayers(players_list):
         print(vars(i))
 
 ##### WHEN PLAYER SELECTS OPTION TO MAKE A SUGGESTION #####
-def makeSuggestion(guess: classes.Guess, player: classes.Player):
-    print(player.name, " has made a suggestion:")
-    print(vars(guess))
+def makeSuggestion():
+    print("Please select room")
+    roominput = input()
+    print("Please select character")
+    charinput = input()
+    print("Please select weapon")
+    weaponinput = input()
+    font = pygame.font.SysFont('comicsansms', 40)
+    prompt = font.render(('Player Guessed: '+roominput+' '+charinput+' '+weaponinput), True, (255, 255, 255))
+    return prompt, False
 
 ##### WHEN PLAYER SELECTS OPTION TO MAKE AN ACCUSATION #####
-def makeAccusation(guess: classes.Guess, player: classes.Player, correct_guess: classes.Guess):
-    print(player.name, " has accused:")
-    print(vars(guess))
-    if (guess.character == correct_guess.character and guess.room == correct_guess.room and guess.weapon == correct_guess.weapon):
-        print(player.name, " wins!")
+def makeAccusation(correctGuess):
+    print("Please select room")
+    roominput = input()
+    print("Please select character")
+    charinput = input()
+    print("Please select weapon")
+    weaponinput = input()
+    if roominput == correctGuess.room and charinput == correctGuess.character and weaponinput == correctGuess.weapon:
+        finalaccusation = 'Player wins!'
     else:
-        print("Incorrect! The game is over. The correct answer was:")
-        print(vars(correct_guess))
+        finalaccusation = 'Player loses!'
+    print('Player Accused: ',roominput,' ',charinput,' ',weaponinput)
+    font = pygame.font.SysFont('comicsansms', 40)
+    prompt = font.render(finalaccusation, True, (255, 255, 255))
+    return prompt, False
+
+##### PLAYER CHOOSES TO END THEIR TURN #####
+def endTurn(game_players, currentplayer):
+    if game_players.index(currentplayer) < len(game_players)-1:
+        game_players[game_players.index(currentplayer)+1].turn = True
+    else:
+        game_players[0].turn = True
+    game_players[game_players.index(currentplayer)].turn = False
+    return game_players
 
 ##### ADDS ALL POSSIBLE LOCATIONS INTO A LIST #####
 def addLocations():
@@ -166,9 +189,10 @@ def printMoves(locations, playerbutton, WIN):
                         possmoves.append(validmove)
     for move in possmoves:
         move_button = classes.ImageButton(image=pygame.image.load("images/move_button.png"), pos=(move.x,move.y), name="move button")
-        move_button.update(WIN)
         possmovebuttons.append(move_button)
+        move_button.update(WIN)
     return possmovebuttons
+
 
 ##### UPDATES PLAYER POSITION IF THEY CHOOSE ACCEPTABLE MOVEMENT #####
 def movePlayer(playerbutton, move, WIN):
@@ -198,3 +222,19 @@ def dealCards(gameplayers, correctGuess: classes.Guess):
             remainingCards.remove(randomcard)
             gameplayers[j].cards.append(randomcard)
     return gameplayers, correctGuess, openCards
+
+def showOpenCards(openCards, WIN):
+    font = pygame.font.SysFont('comicsansms', 15)
+    safeCard = font.render('Safe Cards:',True, (255,255,255))
+    WIN.blit(safeCard,(10,170))
+    for card in openCards:
+        title = font.render(card, True, (255, 255, 255))
+        WIN.blit(title,(10,(200+30*openCards.index(card))))
+
+def showPlayerCards(cards, WIN):
+    font = pygame.font.SysFont('comicsansms', 15)
+    playerCard = font.render('Your Cards:',True, (255,255,255))
+    WIN.blit(playerCard,(685,170))
+    for card in cards:
+        title = font.render(card, True, (255, 255, 255))
+        WIN.blit(title,(685,(200+30*cards.index(card))))
