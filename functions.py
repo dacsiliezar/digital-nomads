@@ -105,7 +105,7 @@ def printMoves(locations, playerbutton, WIN):
         if move.x == playerbutton.x_pos and move.y == playerbutton.y_pos:
             if move.loc == "Study":
                 for validmove in locations:
-                    if validmove.loc == 1 or validmove.loc == 3:
+                    if validmove.loc == 1 or validmove.loc == 3 or validmove.loc == "Kitchen":
                         possmoves.append(validmove)
             if move.loc == "Hall":
                 for validmove in locations:
@@ -113,7 +113,7 @@ def printMoves(locations, playerbutton, WIN):
                         possmoves.append(validmove)
             if move.loc == "Lounge":
                 for validmove in locations:
-                    if validmove.loc == 2 or validmove.loc == 5:
+                    if validmove.loc == 2 or validmove.loc == 5 or validmove.loc == "Conservatory":
                         possmoves.append(validmove)
             if move.loc == "Library":
                 for validmove in locations:
@@ -129,7 +129,7 @@ def printMoves(locations, playerbutton, WIN):
                         possmoves.append(validmove)
             if move.loc == "Conservatory":
                 for validmove in locations:
-                    if validmove.loc == 8 or validmove.loc == 11:
+                    if validmove.loc == 8 or validmove.loc == 11 or validmove.loc == "Lounge":
                         possmoves.append(validmove)
             if move.loc == "Ballroom":
                 for validmove in locations:
@@ -137,7 +137,7 @@ def printMoves(locations, playerbutton, WIN):
                         possmoves.append(validmove)
             if move.loc == "Kitchen":
                 for validmove in locations:
-                    if validmove.loc == 10 or validmove.loc == 12:
+                    if validmove.loc == 10 or validmove.loc == 12 or validmove.loc == "Study":
                         possmoves.append(validmove)
             if move.loc == 1:
                 for validmove in locations:
