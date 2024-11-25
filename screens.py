@@ -1,5 +1,4 @@
 import pygame
-import pygame_gui
 import classes
 
 WIDTH, HEIGHT = 800, 725
