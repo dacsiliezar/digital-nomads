@@ -157,7 +157,7 @@ class Game:
         return characterList, servercharacters
 
     ##### SHOWS POSSIBLE OPTIONS FOR MOVEMENT WHEN PLAYER CHOOSES TO MOVE #####
-    def printMoves(self, locations, playerbutton, WIN):
+    def printMoves(self, locations, playerbutton, players, WIN):
         possmoves = []
         possmovebuttons = []
         for move in locations:
@@ -246,6 +246,11 @@ class Game:
                     for validmove in locations:
                         if validmove.loc == "Ballroom" or validmove.loc == "Kitchen":
                             possmoves.append(validmove)
+        for move in possmoves:
+            for player in players:
+                if move.x == player.x and move.y == player.y:
+                    if type(move.loc) == int:
+                        possmoves.remove(move)
         for move in possmoves:
             move_button = classes.ImageButton(
                 image=pygame.image.load("images/move_button.png"),

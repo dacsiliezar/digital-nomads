@@ -215,7 +215,7 @@ def main():
                                 hasnotendedturn = False
                     if displaymoves:
                         locations = game.addLocations()
-                        possmovebuttons = game.printMoves(locations, localplayers[onlineplayer].playerbutton, WIN)
+                        possmovebuttons = game.printMoves(locations, localplayers[onlineplayer].playerbutton, game.gameplayers, WIN)
                         for move in possmovebuttons:
                             if event.type == pygame.MOUSEBUTTONDOWN:
                                 if move.checkForInput(MENU_MOUSE_POS):
