@@ -139,18 +139,12 @@ def main():
             ##### GAME SCREEN #####
             elif game_state == "game_screen":
                 move_button, end_button, suggestion_button, accusation_button = screens.draw_game_screen()
-                game = n.send(["update screen",None])
                 font = pygame.font.SysFont('comicsansms', 30)
                 WIN = game.showTurn(WIN)
-                countp = 0
-                for p in localplayers:
-                    p.x = game.gameplayers[countp].x
-                    p.y = game.gameplayers[countp].y
-                    countp += 1
-                game.redrawWindow(WIN, game, localplayers)
                 if initiating_game_screen:
                     game = n.send(["add players", game.gameplayers])
-                    localplayers = game.addCharacters(game.gameplayers, WIN)
+                    localplayers, game.gameplayers = game.addCharacters(game.gameplayers, WIN)
+                    game = n.send(["add players", game.gameplayers])
                     game = n.send(["verify cards", None])
                     if not game.dealtCards:
                         game.gameplayers, game.correctGuess, openCards = game.dealCards(game.gameplayers, correctGuess)
@@ -158,6 +152,8 @@ def main():
                         print('Here is a hint...',correctGuess.weapon, correctGuess.character, correctGuess.room)
                         game = n.send(["dealing cards", dealtCards, openCards, correctGuess, game.gameplayers])
                     initiating_game_screen = False
+                game = n.send(["update screen", None])
+                localplayers = game.updatePlayers(game.gameplayers, WIN)
                 if len(openCards) != 0:
                     game.showOpenCards(openCards, WIN)
                 for players in localplayers:
@@ -224,6 +220,8 @@ def main():
                             if event.type == pygame.MOUSEBUTTONDOWN:
                                 if move.checkForInput(MENU_MOUSE_POS):
                                     localplayers[onlineplayer].playerbutton = game.movePlayer(localplayers[onlineplayer].playerbutton, move, WIN)
+                                    player.x = move.x_pos
+                                    player.y = move.y_pos
                                     game = n.send(["move player", onlineplayer, player])
                                     prompt = font.render(' ', True, (255, 255, 255))
                                     displaymoves = False

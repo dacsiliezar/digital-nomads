@@ -128,7 +128,6 @@ class Game:
             image=pygame.image.load("images/plum_button.png"),
             pos=(504, 547),
             name="Professor Plum")
-
         for char in gameplayers:
             counter = 0
             for charlist in characters:
@@ -147,7 +146,15 @@ class Game:
                             newchar.playerbutton.update(WIN)
                     characterList.append(newchar)
                 counter = counter + 1
-        return characterList
+        servercharacters = gameplayers
+        for char in servercharacters:
+            counter = 0
+            for charlist in characters:
+                if char.character == charlist:
+                    char.x = characterX[counter]
+                    char.y = characterY[counter]
+                counter = counter + 1
+        return characterList, servercharacters
 
     ##### SHOWS POSSIBLE OPTIONS FOR MOVEMENT WHEN PLAYER CHOOSES TO MOVE #####
     def printMoves(self, locations, playerbutton, WIN):
@@ -257,13 +264,41 @@ class Game:
         playerbutton.update(WIN)
         return updated_playerbutton
 
-    def updatePlayers(self, playerbutton, player, WIN):
-        updated_playerbutton = classes.ImageButton(image=playerbutton.image,
-                                                   pos=(player.x,
-                                                        player.y),
-                                                   name=playerbutton.name)
-        playerbutton.update(WIN)
-        return updated_playerbutton
+    def updatePlayers(self, players, WIN):
+        localplayers = players
+        for player in localplayers:
+            if player.character == "Miss Scarlet":
+                player.playerbutton = classes.ImageButton(
+                    image=pygame.image.load("images/scar_button.png"),
+                    pos=(player.x, player.y),
+                    name="Miss Scarlet")
+            elif player.character == "Colonel Mustard":
+                player.playerbutton = classes.ImageButton(
+                    image=pygame.image.load("images/mustard_button.png"),
+                    pos=(player.x, player.y),
+                    name="Colonel Mustard")
+            elif player.character == "Mr. Green":
+                player.playerbutton = classes.ImageButton(
+                    image=pygame.image.load("images/green_button.png"),
+                    pos=(player.x, player.y),
+                    name="Mr. Green")
+            elif player.character == "Mrs. Peacock":
+                player.playerbutton = classes.ImageButton(
+                    image=pygame.image.load("images/peacock_button.png"),
+                    pos=(player.x, player.y),
+                    name="Mrs. Peacock")
+            elif player.character == "Mrs. White":
+                player.playerbutton = classes.ImageButton(
+                    image=pygame.image.load("images/white_button.png"),
+                    pos=(player.x, player.y),
+                    name="Mrs. White")
+            elif player.character == "Professor Plum":
+                player.playerbutton = classes.ImageButton(
+                    image=pygame.image.load("images/plum_button.png"),
+                    pos=(player.x, player.y),
+                    name="Professor Plum")
+            player.playerbutton.update(WIN)
+        return localplayers
 
     ##### DEALS ALL CARDS AND GENERATES CORRECT GUESS WHEN GAME IS STARTED #####
     def dealCards(self, gameplayers, correctGuess: classes.Guess):

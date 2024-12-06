@@ -65,7 +65,8 @@ def threaded_client(conn, p, gameId):
                         games[gameId].globalprompt = data[1]
                     elif data[0] == "update prompt":
                         games[gameId].globalprompt = data[1]
-
+                    elif data[0] == "update screen":
+                        conn.sendall(pickle.dumps(game))
                     conn.sendall(pickle.dumps(game))
 
             else:
