@@ -28,6 +28,7 @@ def main():
     displaymoves = False
     initialdrawing = True
     initiating_game_screen = True
+    playerRebuttal = False
     correctGuess = classes.Guess(None, None, None)
     game_state = "home_screen"
     white = pygame.Color('white')
@@ -165,10 +166,29 @@ def main():
                     globalprompt = game.globalprompt
                     bigprompt = font.render(globalprompt, True, (255, 255, 255))
                     WIN.blit(bigprompt, (400-bigprompt.get_width()/2, 100))
+                    if game.rebuteSuggestion == True:
+                        rebutebutton = classes.ImageButton(
+                            image=pygame.image.load("images/show_card_button.png"),
+                            pos=(70, 350),
+                            name="Rebute Button")
+                        rebutebutton.update(WIN)
+                        if event.type == pygame.MOUSEBUTTONDOWN:
+                            ### PLAYER CHOOSES TO MOVE THEIR CHARACTER ###
+                            if rebutebutton.checkForInput(MENU_MOUSE_POS):
+                                playerRebuttal = True
+                        if playerRebuttal:
+                            print("Please choose which card to show")
+                            rebuttalinput = input()
+                            game = n.send(["rebuttal input",(player.name + " has " + rebuttalinput)])
+                            playerRebuttal = False
+
                 if player.turn == True:
                     hasnotchosenmove = True
                     coverbox = pygame.Rect(685,150,115,500)
                     WIN.blit(prompt, (400 - prompt.get_width()/2, 100))
+                    game = n.send(["verify screen", None])
+                    otherplayerrebuttal = font.render(game.rebuttalinput, True, (255, 255, 255))
+                    WIN.blit(otherplayerrebuttal, (400-otherplayerrebuttal.get_width()/2, 80))
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         ### PLAYER CHOOSES TO MOVE THEIR CHARACTER ###
                         if move_button.checkForInput(MENU_MOUSE_POS):
@@ -188,8 +208,8 @@ def main():
                             WIN.blit(prompt, (400 - prompt.get_width()/2, 100))
                             pygame.display.update()
                             if hasnotsuggested:
-                                globalprompt, hasnotsuggested = game.makeSuggestion(player.name)
-                                game = n.send(["suggestion",globalprompt])
+                                globalprompt, hasnotsuggested, weaponinput, charinput, roominput = game.makeSuggestion(player.name)
+                                game = n.send(["suggestion",globalprompt, weaponinput, charinput, roominput])
                                 prompt = font.render(' ', True, (255, 255, 255))
                             pygame.display.update()
                         ### PLAYER CHOOSES TO MAKE AN ACCUSATION ###
@@ -210,7 +230,7 @@ def main():
                             hasnotaccused = True
                             hasnotsuggested = True
                             if hasnotendedturn:
-                                game.gameplayers = game.endTurn(game.gameplayers, player)
+                                game.gameplayers = game.endTurn(game.gameplayers, onlineplayer)
                                 game = n.send(["end turn", game.gameplayers])
                                 hasnotendedturn = False
                     if displaymoves:

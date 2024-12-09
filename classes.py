@@ -12,7 +12,6 @@ class Player:
     self.turn = False
     self.cards = []
 
-
 class Guess:
   def __init__(self, weapon, character, room):
     self.weapon = weapon

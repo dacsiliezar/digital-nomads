@@ -11,8 +11,14 @@ class Game:
         self.gameplayers = []
         self.openCards = []
         self.dealtCards = False
+        self.rebuteSuggestion = False
         self.correctGuess = classes.Guess(None, None, None)
         self.globalprompt = " "
+        self.weaponsuggestion = ""
+        self.roomsuggestion = ""
+        self.charactersuggestion = ""
+        self.playershowed = ""
+        self.rebuttalinput = ""
 
     def print_players(self, p):
         return self.gameplayers[p]
@@ -45,7 +51,7 @@ class Game:
         roominput = input()
         font = pygame.font.SysFont('comicsansms', 25)
         prompt = playername + ' Suggested: ' + weaponinput + ' ' + charinput + ' ' + roominput
-        return prompt, False
+        return prompt, False, weaponinput, charinput, roominput
 
     ##### WHEN PLAYER SELECTS OPTION TO MAKE AN ACCUSATION #####
     def makeAccusation(self, correctGuess, playername):
@@ -59,17 +65,17 @@ class Game:
             finalaccusation = 'Player wins!'
         else:
             finalaccusation = 'Player loses!'
-        font = pygame.font.SysFont('comicsansms', 25)
+        font = pygame.font.SysFont('comicsansms', 20)
         prompt = playername + ' Accused: ' + weaponinput + ' ' + charinput + ' ' + roominput + '.' + finalaccusation
         return prompt, False
 
     ##### PLAYER CHOOSES TO END THEIR TURN #####
-    def endTurn(self, game_players, currentplayer):
-        if game_players.index(currentplayer) < len(game_players) - 1:
-            game_players[game_players.index(currentplayer) + 1].turn = True
+    def endTurn(self, game_players, onlineplayer):
+        if onlineplayer < len(game_players) - 1:
+            game_players[onlineplayer + 1].turn = True
         else:
             game_players[0].turn = True
-        game_players[game_players.index(currentplayer)].turn = False
+        game_players[onlineplayer].turn = False
         return game_players
 
     ##### ADDS ALL POSSIBLE LOCATIONS INTO A LIST #####
@@ -368,22 +374,28 @@ class Game:
     def showTurn(self, WIN):
         font = pygame.font.SysFont('comicsansms', 15)
         turntitle = font.render('Turn:', True, (255, 255, 255))
-        WIN.blit(turntitle, (10, 320))
+        WIN.blit(turntitle, (10, 250))
         if len(self.gameplayers) > 0:
             for player in self.gameplayers:
                 if player.turn == True:
                     title = font.render(player.name, True, (255, 255, 255))
-                    WIN.blit(title, (10, (350)))
+                    WIN.blit(title, (10, (280)))
         return WIN
 
-    def rebuteSuggestion(self, room, weapon, character, player, WIN):
+    def chooseRebuttal(self, WIN, player):
         showrebuttal = " "
+        rebuttalbuttons = []
+        font = pygame.font.SysFont('comicsansms', 20)
+        counter = 0
         for card in player.cards:
-            if card == room or card == weapon or card == character:
-                showrebuttal = player.name + " has " + card
+            if card == self.roomsuggestion or card == self.weaponsuggestion or card == self.charactersuggestion:
+                showrebuttal = font.render(card, True, (255, 255, 255))
+                button_rect = showrebuttal.get_rect(topleft=(10, 380+30*counter))
+                WIN.blit(showrebuttal, (10, (380 + 30 * counter)))
+                rebuttalbuttons.append(button_rect)
+                counter += 1
         for card in self.openCards:
-            if card == room or card == weapon or card == character:
-                showrebuttal = card + " is an open card"
-        rebute = font.render(showrebuttal, True, (255, 255, 255))
-        WIN.blit(rebute, (10, 400))
-        return WIN
+            if card == self.roomsuggestion or card == self.weaponsuggestion or card == self.charactersuggestion:
+                showrebuttal = font.render(card, True, (255, 255, 255))
+                WIN.blit(showrebuttal, (10, (380 + 30 * counter)))
+                counter += 1

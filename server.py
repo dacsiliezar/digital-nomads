@@ -52,6 +52,8 @@ def threaded_client(conn, p, gameId):
                         conn.sendall(pickle.dumps(game))
                     elif data[0] == "end turn":
                         games[gameId].gameplayers = data[1]
+                        games[gameId].rebuteSuggestion = False
+                        games[gameId].rebuttalinput = ""
                     elif data[0] == "add players":
                         games[gameId].gameplayers = data[1]
                     elif data[0] == "move player":
@@ -61,12 +63,20 @@ def threaded_client(conn, p, gameId):
                         conn.sendall(pickle.dumps(game))
                     elif data[0] == "suggestion":
                         games[gameId].globalprompt = data[1]
+                        games[gameId].rebuteSuggestion = True
+                        games[gameId].weaponsuggestion = data[2]
+                        games[gameId].charactersuggestion = data[3]
+                        games[gameId].roomsuggestion = data[4]
                     elif data[0] == "accusation":
                         games[gameId].globalprompt = data[1]
                     elif data[0] == "update prompt":
                         games[gameId].globalprompt = data[1]
                     elif data[0] == "update screen":
                         conn.sendall(pickle.dumps(game))
+                    elif data[0] == "rebuttal":
+                        games[gameId].playershowed = data[1]
+                    elif data[0] == "rebuttal input":
+                        games[gameId].rebuttalinput = data[1]
                     conn.sendall(pickle.dumps(game))
 
             else:
