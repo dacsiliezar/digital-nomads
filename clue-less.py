@@ -140,6 +140,30 @@ def main():
             ##### GAME SCREEN #####
             elif game_state == "game_screen":
                 move_button, end_button, suggestion_button, accusation_button = screens.draw_game_screen()
+                chatbutton = classes.ImageButton(
+                    image=pygame.image.load("images/chat_button.png"),
+                    pos=(40, 400),
+                    name="Chat Button")
+                chatbutton.update(WIN)
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    ### PLAYER CHOOSES TO MOVE THEIR CHARACTER ###
+                    if chatbutton.checkForInput(MENU_MOUSE_POS):
+                        print("Please enter your chat!")
+                        chatwords = input()
+                        if onlineplayer == 0:
+                            pname = "S"
+                        elif onlineplayer == 1:
+                            pname = "P"
+                        elif onlineplayer == 2:
+                            pname = "D"
+                        game = n.send(["Chat", (pname + ": " + chatwords)])
+                font = pygame.font.SysFont('comicsansms', 15)
+                chatlog = font.render('Chat Log:', True, (255, 255, 255))
+                WIN.blit(chatlog, (10, 420))
+                game = n.send(["verify screen"])
+                for chatword in game.chatlog:
+                    title = font.render(chatword, True, (255, 255, 255))
+                    WIN.blit(title, (10, (450 + 30 * game.chatlog.index(chatword))))
                 font = pygame.font.SysFont('comicsansms', 30)
                 WIN = game.showTurn(WIN)
                 if initiating_game_screen:
@@ -185,6 +209,7 @@ def main():
                 if player.turn == True:
                     hasnotchosenmove = True
                     coverbox = pygame.Rect(685,150,115,500)
+                    font = pygame.font.SysFont('comicsansms', 20)
                     WIN.blit(prompt, (400 - prompt.get_width()/2, 100))
                     game = n.send(["verify screen", None])
                     otherplayerrebuttal = font.render(game.rebuttalinput, True, (255, 255, 255))
@@ -219,10 +244,11 @@ def main():
                             globalprompt = 'Please enter accusation'
                             prompt = font.render(globalprompt, True, (255, 255, 255))
                             WIN.blit(prompt, (400 - prompt.get_width()/2, 80))
-                            game.redrawWindow(WIN, game, localplayers)
+                            pygame.display.update()
                             if hasnotaccused:
                                 globalprompt, hasnotaccused = game.makeAccusation(correctGuess, player.name)
                             game = n.send(["accusation", globalprompt])
+                            font = pygame.font.SysFont('comicsansms', 20)
                             prompt = font.render(' ', True, (255, 255, 255))
                         ### PLAYER CHOOSES TO END THEIR TURN ###
                         if end_button.checkForInput(MENU_MOUSE_POS):

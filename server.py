@@ -77,6 +77,23 @@ def threaded_client(conn, p, gameId):
                         games[gameId].playershowed = data[1]
                     elif data[0] == "rebuttal input":
                         games[gameId].rebuttalinput = data[1]
+                    elif data[0] == "Chat":
+                        if games[gameId].chatlog[0] == '':
+                            games[gameId].chatlog[0] = data[1]
+                        elif games[gameId].chatlog[1] == '' and games[gameId].chatlog[0] != '':
+                            games[gameId].chatlog[1] = data[1]
+                        elif games[gameId].chatlog[2] == '' and games[gameId].chatlog[1] != '':
+                            games[gameId].chatlog[2] = data[1]
+                        elif games[gameId].chatlog[3] == '' and games[gameId].chatlog[2] != '':
+                            games[gameId].chatlog[3] = data[1]
+                        elif games[gameId].chatlog[4] == '' and games[gameId].chatlog[3] != '':
+                            games[gameId].chatlog[4] = data[1]
+                        else:
+                            games[gameId].chatlog[0] = data[1]
+                            games[gameId].chatlog[1] = ""
+                            games[gameId].chatlog[2] = ""
+                            games[gameId].chatlog[3] = ""
+                            games[gameId].chatlog[4] = ""
                     conn.sendall(pickle.dumps(game))
 
             else:

@@ -19,6 +19,7 @@ class Game:
         self.charactersuggestion = ""
         self.playershowed = ""
         self.rebuttalinput = ""
+        self.chatlog = ['','','','','']
 
     def print_players(self, p):
         return self.gameplayers[p]
@@ -62,11 +63,11 @@ class Game:
         print("Please select room")
         roominput = input()
         if roominput == correctGuess.room and charinput == correctGuess.character and weaponinput == correctGuess.weapon:
-            finalaccusation = 'Player wins!'
+            finalaccusation = playername + ' wins!'
         else:
-            finalaccusation = 'Player loses!'
+            finalaccusation = playername + ' loses!'
         font = pygame.font.SysFont('comicsansms', 20)
-        prompt = playername + ' Accused: ' + weaponinput + ' ' + charinput + ' ' + roominput + '.' + finalaccusation
+        prompt = 'Accused: ' + weaponinput + ' ' + charinput + ' ' + roominput + '.' + finalaccusation
         return prompt, False
 
     ##### PLAYER CHOOSES TO END THEIR TURN #####
