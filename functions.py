@@ -325,7 +325,7 @@ class Game:
             "Candlestick", "Wrench", "Lead Pipe", "Rope", "Dagger", "Revolver"
         ]
         correctGuess.room = random.choice(rooms)
-        correctGuess.character = random.choice(characters)
+        correctGuess.character = "Mrs. White"
         correctGuess.weapon = random.choice(weapons)
         remainingCards = rooms + characters + weapons
         remainingCards.remove(correctGuess.room)
